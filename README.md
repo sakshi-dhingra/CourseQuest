@@ -20,3 +20,11 @@ _Tentative Deadline - 17th_
 
 -------------------------------------------------------------------------------------
 **Meeting 3**
+Deadline - 24th Sunday
+
+1. Attributes
+2. Difficulty
+3. Website
+4. Paid/Unpaid
+
+
