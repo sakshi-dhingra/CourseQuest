@@ -1,0 +1,67 @@
+user will like courses
+generate tags from the user liked courses
+feed that back into kmeans
+generate similar courses
+
+define common format
+    course_name,website,url,diffculty,skills,tags
+add these new columns
+derive new df with only these columns
+
+coursera_df
+...
+edx_df
+...
+udemy
+
+vertically concat
+then shuffle rows
+
+-----------------------
+
+Issues:
+1. difficulty option
+2. multiple likes
+
+
+-------------------------------
+1. Platform?
+2. Get recommendations
+
+
+----------------
+
+1. add selected tags option in left
+2. add view similar courses in left
+3. 
+
+
+
+
+----------------------------------------------------------------------------
+Tentative Deadline - 17th 
+
+
+1. Backend - Logic decoupling into separate UI and API server (to do heavy lifting while loading the UI) - *Sakshi*  
+
+2. User Management - Login/ Register - *Sanat*
+
+3. Postgres : user tables, user likes, user attributes, user similar courses + updated tags for 'Dynamic user profiles' - *Zan*
+
+4. ML : Recommendation Engine alternatives + attributes cleanup - *Yuanpei* + *Parthiban*
+
+5. Frontend:  (Streamlit) - add details of all attributes from user model, course model from our earlier report (Get info like course length, price etc from courses url API - eDX and Coursera for building the Learning path) + UI correction/ embellishment - *Sanat*
+
+
+----------------
+
+1. Attributes
+2. Difficulty
+3. Website
+4. Paid/Unpaid
+
+-------------------------
+[client]
+Frontend (UI) --REST API calls--> API server -calls-> Recommendation Engine
+                                    \
+                                     \___ DB
