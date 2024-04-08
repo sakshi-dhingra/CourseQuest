@@ -1,0 +1,55 @@
+body {
+  background-color: #e9f1fa; /* Light blue */
+}
+
+.App {
+  background-color: #8dd8f1; /* Bright blue */
+  text-align: center;
+  margin-top: 50px;
+}
+
+/* Other styles for your components */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-container h2 {
+  margin-bottom: 20px;
+}
+
+.input-field {
+  margin-bottom: 10px;
+}
+
+.input-field input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.btn {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.message {
+  margin-top: 20px;
+  color: #007bff;
+  font-weight: bold;
+}
