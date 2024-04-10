@@ -91,9 +91,22 @@ def generate_recommendations():
     data = request.json
     user_id = data["user_id"]
     keyword = data["keyword"]
-    recs = app_context["recommendation_engine"].get_recommendations(keyword)
+    difficulty = data["difficulty_level"]
+    website = data["website"]
+    fees = data["fees"]
+    recs = app_context["recommendation_engine"].get_recommendations(keyword, difficulty, website, fees)
 
     return jsonify({"user_id": user_id, "recommended_courses": recs.to_dict(orient='records')}), 200
+
+# Endpoint to get courses similar to coureses liked by a user (GET)
+@app.route('/similar_courses/<user_id>', methods=['GET'])
+def get_similar_courses(user_id):
+    liked_courses = [course["course_name"] for course in DB["liked_courses"] if course["user_id"] == user_id]
+    if not liked_courses:
+        return jsonify({"user_id": user_id, "similar_courses": []}), 200
+    
+    recs = app_context["recommendation_engine"].get_similar_courses(liked_courses)
+    return jsonify({"user_id": user_id, "similar_courses": recs.to_dict(orient='records')}), 200
 
 # Endpoint to get recommendations
 @app.route('/keywords', methods=['GET'])
