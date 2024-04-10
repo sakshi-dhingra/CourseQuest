@@ -114,6 +114,9 @@ class Engine:
         # Concatenate Coursera and EdX data
         self.courses_all = pd.concat([coursera_data, edx_data], ignore_index=True).sample(frac=1, random_state=42)
 
+        # Workaround: Drop duplicates by name
+        self.courses_all = self.courses_all.drop_duplicates(subset=['Course Name'])
+
         # Add Simulated data paid/free
         fees = np.random.choice(['paid', 'free'], size=len(self.courses_all))
         # Add this list as a new column to the dataframe
