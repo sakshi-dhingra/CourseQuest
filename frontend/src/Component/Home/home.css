@@ -1,0 +1,63 @@
+/* home.css */
+
+.home-container {
+    text-align: center;
+  }
+  
+  .user-profile {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .user-profile-icon {
+    margin-right: 10px;
+    width: 30px; /* Adjust the width */
+    height: 30px;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-name {
+    margin-right: 10px;
+  }
+  
+  h1,
+  h3 {
+    margin-bottom: 20px;
+  }
+  
+  /* Styling for tabs */
+  .tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .tab {
+    padding: 10px 20px;
+    margin-right: 10px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    background-color: #f2f2f2;
+  }
+  
+  .tab:last-child {
+    margin-right: 0;
+  }
+  
+  .tab.active {
+    background-color: #fff;
+  }
+  
+  /* Styling for tab content */
+  .tab-content {
+    border: 1px solid #ccc;
+    padding: 20px;
+  }
+  
