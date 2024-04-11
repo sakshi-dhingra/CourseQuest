@@ -1,20 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import './search.css'; 
+import Select from 'react-select';
 
 const Search = ({ onSearch }) => {
-  const [userInputAttributes, setUserInputAttributes] = useState('');
+  const [selectedAttributes, setSelectedAttributes] = useState([]);
   const [selectedDifficulty, setSelectedDifficulty] = useState('');
   const [selectedWebsite, setSelectedWebsite] = useState('');
   const [selectedPaid, setSelectedPaid] = useState('');
+  const [keywords, setKeywords] = useState([]);
+
+  useEffect(() => {
+    const fetchKeywords = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/keywords');
+        if (!response.ok) {
+          throw new Error('Failed to fetch keywords');
+        }
+        const data = await response.json();
+        const options = data.keywords.map(keyword => ({ value: keyword, label: keyword }));
+        setKeywords(options);
+      } catch (error) {
+        console.error('Error fetching keywords:', error);
+      }
+    };
+
+    fetchKeywords();
+  }, []); 
+
 
   // Options for dropdown questions
-  const difficultyOptions = ['Begginer', 'Intermediate', 'Advanced'];
-  const websiteOptions = ['Coursera','Edx'];
-  const paidOptions = ['Paid', 'Unpaid'];
+  const difficultyOptions = ['Beginner', 'Intermediate', 'Advanced'];
+  const websiteOptions = ['Coursera','Edx','Both'];
+  const paidOptions = ['Paid', 'Unpaid','Both'];
 
   // Event handlers for dropdown selections
-  const handleAttributeChange = (event) => {
-    setUserInputAttributes(event.target.value);
+  const handleAttributeChange = (selectedOptions) => {
+    setSelectedAttributes(selectedOptions);
   };
   const handleDifficultyChange = (event) => {
     setSelectedDifficulty(event.target.value);
@@ -32,7 +53,7 @@ const Search = ({ onSearch }) => {
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     const searchParams = {
-      attributes: userInputAttributes,
+      attributes: selectedAttributes.map(option => option.value),
       difficulty: selectedDifficulty,
       website: selectedWebsite,
       paid: selectedPaid,
@@ -45,14 +66,18 @@ const Search = ({ onSearch }) => {
     <div className="search-container">
       <h2>Search Courses</h2>
       <form onSubmit={handleSearchSubmit} className="search-form">
-        {/* Dropdown for Attributes */}
-        <div className="form-group">
+      <div className="form-group">
           <label>Attributes:</label>
-          <input type="text" value={userInputAttributes} onChange={handleAttributeChange} placeholder="Enter attributes" />
-        </div>
+          <Select
+            isMulti
+            value={selectedAttributes}
+            onChange={handleAttributeChange}
+            options={keywords}
+          />
+      </div>  
         {/* Dropdown for Difficulty level */}
         <div className="form-group">
-          <label>Difficulty level:</label>
+          <label>Difficulty Level:</label>
           <select value={selectedDifficulty} onChange={handleDifficultyChange}>
             <option value="">Select Difficulty</option>
             {difficultyOptions.map((option) => (
@@ -76,9 +101,9 @@ const Search = ({ onSearch }) => {
         </div>
         {/* Dropdown for Paid/Unpaid */}
         <div className="form-group">
-          <label>Paid/Unpaid:</label>
+          <label>Cost:</label>
           <select value={selectedPaid} onChange={handlePaidChange}>
-            <option value="">Select Paid/Unpaid</option>
+            <option value="">Select Cost</option>
             {paidOptions.map((option) => (
               <option key={option} value={option}>
                 {option}
