@@ -117,8 +117,8 @@ class Engine:
         # Workaround: Drop duplicates by name
         self.courses_all = self.courses_all.drop_duplicates(subset=['Course Name'])
 
-        # Add Simulated data paid/free
-        fees = np.random.choice(['paid', 'free'], size=len(self.courses_all))
+        # Add Simulated data paid/unpaid
+        fees = np.random.choice(['Paid', 'Unpaid'], size=len(self.courses_all))
         # Add this list as a new column to the dataframe
         self.courses_all['Fees'] = fees
         # enhanced clean
@@ -163,9 +163,9 @@ class Engine:
             filtered_courses = filtered_courses[~filtered_courses['Course Name'].isin(exclude_by_name)]
         if difficulty:
             filtered_courses = filtered_courses[filtered_courses['Difficulty Level'] == difficulty]
-        if website:
+        if website and website != "Both":
             filtered_courses = filtered_courses[filtered_courses['Website'] == website]
-        if fees:
+        if fees and fees != "Both":
             filtered_courses = filtered_courses[filtered_courses['Fees'] == fees]
 
         filtered_X = self.tfidf.transform(filtered_courses['Attributes'])

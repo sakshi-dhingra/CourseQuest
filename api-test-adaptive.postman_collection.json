@@ -68,14 +68,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:5000/liked_courses/SesvIj",
+					"raw": "localhost:5000/liked_courses/exQMmx",
 					"host": [
 						"localhost"
 					],
 					"port": "5000",
 					"path": [
 						"liked_courses",
-						"SesvIj"
+						"exQMmx"
 					]
 				}
 			},
@@ -87,14 +87,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:5000/similar_courses/SesvIj",
+					"raw": "localhost:5000/similar_courses/RvZSUR",
 					"host": [
 						"localhost"
 					],
 					"port": "5000",
 					"path": [
 						"similar_courses",
-						"SesvIj"
+						"RvZSUR"
 					]
 				}
 			},
@@ -113,7 +113,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"user_id\": \"SesvIj\",\r\n    \"course_name\": \"AWS Fundamentals: Building Serverless Applications\"\r\n}"
+					"raw": "{\r\n    \"user_id\": \"RvZSUR\",\r\n    \"course_name\": \"AWS Fundamentals: Building Serverless Applications\"\r\n}"
 				},
 				"url": {
 					"raw": "localhost:5000/like_course",
@@ -187,7 +187,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"user_id\": \"SesvIj\",\r\n    \"keyword\": \"aws\",\r\n    \"difficulty_level\": \"Beginner\",\r\n    \"website\": \"Coursera\",\r\n    \"fees\": \"free\"\r\n}"
+					"raw": "{\r\n    \"user_id\": \"RvZSUR\",\r\n    \"keyword\": \"aws\",\r\n    \"difficulty_level\": \"Beginner\",\r\n    \"website\": \"Both\",\r\n    \"fees\": \"Paid\"\r\n}"
 				},
 				"url": {
 					"raw": "localhost:5000/generate_recommendations",
