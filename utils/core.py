@@ -10,6 +10,9 @@ import nltk
 from nltk.corpus import stopwords
 from sklearn.metrics.pairwise import cosine_similarity
 
+nltk.data.path.append("Users/sanatparanjape/nltk_data")
+
+
 
 
 class Engine:
@@ -33,8 +36,8 @@ class Engine:
     def _clean_attributes_improved(self, text):
         from nltk.tokenize import word_tokenize
         from nltk.stem import WordNetLemmatizer
-        nltk.download('punkt')
-        nltk.download('wordnet')
+        #nltk.download('punkt')
+        #nltk.download('wordnet')
         stop_words = set(stopwords.words('english'))
         tokens = word_tokenize(text)
         lemmatizer = WordNetLemmatizer()
