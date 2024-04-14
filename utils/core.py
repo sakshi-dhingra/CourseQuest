@@ -7,14 +7,13 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.cluster import KMeans
 from sklearn.metrics.pairwise import cosine_distances, linear_kernel
 import nltk
+import logging
 from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 nltk.data.path.append("Users/sanatparanjape/nltk_data")
-
-
-
-
 class Engine:
     def _remove_commas(self, row):
         if row.name == 'Course Name' or row.name == 'Skills':
@@ -34,10 +33,12 @@ class Engine:
         return cleaned_text
 
     def _clean_attributes_improved(self, text):
+        #logging.getLogger('nltk').setLevel(logging.WARNING)
+        #nltk.download('wordnet', quiet=True)
+        #nltk.download('stopwords', quiet=True)
         from nltk.tokenize import word_tokenize
+
         from nltk.stem import WordNetLemmatizer
-        #nltk.download('punkt')
-        #nltk.download('wordnet')
         stop_words = set(stopwords.words('english'))
         tokens = word_tokenize(text)
         lemmatizer = WordNetLemmatizer()
@@ -47,8 +48,12 @@ class Engine:
         return cleaned_text
 
     def __init__(self):
+        logging.getLogger('nltk').setLevel(logging.WARNING)
+        nltk.download('punkt', quiet=True)
+        print("Loading required nltk package.....")
+        print("Loading complete !")
         # Download stopwords from NLTK
-        nltk.download('stopwords')
+        #nltk.download('stopwords')
 
         # Define stop words
         self.stop_words = set(stopwords.words('english'))
@@ -84,7 +89,7 @@ class Engine:
 
         # Apply self._clean_attributes function to the 'Attributes' column
         coursera_data['Attributes'] = coursera_data['Attributes'].apply(self._clean_attributes)
-        #coursera_data['Attributes'] = coursera_data['Attributes'].apply(self._clean_attributes_improved)
+        # coursera_data['Attributes'] = coursera_data['Attributes'].apply(self._clean_attributes_improved)
         # ---------------------------- # EDX Cleaning # ---------------------------- #
 
         print("Setup EDX dataset")
@@ -124,6 +129,12 @@ class Engine:
         fees = np.random.choice(['Paid', 'Unpaid'], size=len(self.courses_all))
         # Add this list as a new column to the dataframe
         self.courses_all['Fees'] = fees
+
+        # Generate an array of random integers of the same length as the number of rows in self.courses_all, ranging from 1 to 20.
+        durations = np.random.randint(1, 201, size=len(self.courses_all))
+        # Add this list as a new column to the dataframe
+        self.courses_all['Duration'] = durations
+
         # enhanced clean
         self.courses_all['Attributes'] = self.courses_all['Attributes'].apply(self._clean_attributes_improved)
         attributes = []
@@ -132,8 +143,6 @@ class Engine:
                 attributes.append(attribute.strip())
 
         print("Setup TFIDFVectorizer for recommendations")
-        # Initialize CountVectorizer
-        #self.countv = CountVectorizer(max_features=5000,stop_words='english')
         self.tfidf = TfidfVectorizer(stop_words='english')
         # Transform text data into matrix
         self.X = self.tfidf.fit_transform(self.courses_all['Attributes']).toarray()
@@ -155,7 +164,6 @@ class Engine:
                 difficulty.append(entry.strip())
         self.difficulty = list(set(difficulty))
 
-
     # Function to map user input
 
     def get_recommendations(self, keyword, difficulty, website, fees, exclude_by_name=[]):
@@ -173,17 +181,14 @@ class Engine:
 
         filtered_X = self.tfidf.transform(filtered_courses['Attributes'])
         keyword_vector = self.tfidf.transform([keyword])
-        #cosine_sim = linear_kernel(keyword_vector, filtered_X)
-        #cosine_sim = linear_kernel(keyword_vector, filtered_X)
-        #closest_indices = cosine_sim.argsort()[0][:5]
         cosine_sim = cosine_distances(keyword_vector, filtered_X)
         closest_indices = cosine_sim.argsort()[0][:5]
-        #relevant_courses = filtered_courses[closest_indices][['Course Name', 'Course URL', 'Difficulty Level', 'Website', 'Fees']]
-        relevant_courses = filtered_courses.iloc[closest_indices][['Course Name', 'Course URL', 'Difficulty Level', 'Website', 'Fees']]
+        relevant_courses = filtered_courses.iloc[closest_indices][
+            ['Course Name', 'Course URL', 'Difficulty Level', 'Website', 'Fees','Duration']]
 
         relevant_courses['Course Name'] = relevant_courses['Course Name'].str.replace(',', ' ')
         return relevant_courses
-    
+
     def get_similar_courses(self, liked_courses):
         all_attributes = set()
         for liked_course in liked_courses:
@@ -193,17 +198,5 @@ class Engine:
 
         return self.get_recommendations(" ".join(all_attributes), None, None, None, liked_courses)
 
-'''
-    def get_recommendations(self, keyword):
-        print(f"Getting recommendations for '{keyword}'")
-        filtered_courses = self.courses_all
-        keyword_vector = self.tfidf.transform([keyword])
-        distances = cosine_distances(keyword_vector, self.X)
-        #cosine_sim = linear_kernel(keyword_vector, self.X)
-        #closest_indices = cosine_sim.argsort()[0][:5]
-        #distances = cosine_distances(keyword_vector, self.X)
-        closest_indices = distances.argsort()[0][:5]
-        relevant_courses = self.courses_all.iloc[closest_indices][['Course Name', 'Course URL']]
-        relevant_courses['Course Name'] = relevant_courses['Course Name'].str.replace(',', ' ')
-        return relevant_courses
-'''
+    def get_course_details(self, course_name):
+        return self.courses_all[self.courses_all['Course Name'] == course_name][['Course Name', 'Course URL', 'Difficulty Level', 'Website', 'Fees', 'Duration']].to_dict(orient='records')

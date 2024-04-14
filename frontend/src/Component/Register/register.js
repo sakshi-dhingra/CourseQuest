@@ -10,7 +10,7 @@ const FormWrapper = ({ children }) => {
   );
 };
 
-const Register = () => {
+const Register = ({ handleRegister }) => {
   const initialFormData = {
     user_email: '',
     user_password: '',
@@ -47,6 +47,8 @@ const Register = () => {
       });
 
       if (response.ok) {
+        const data = await response.json();
+        handleRegister(data.user_id);
         alert('Registration successful');
         navigate('/'); // Redirect to login page after successful registration
       } else {

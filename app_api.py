@@ -43,19 +43,19 @@ def login():
         return jsonify({"message": "Invalid credentials"}), 401
 
 # Endpoint to get courses liked by a user (GET)
-@app.route('/liked_courses', methods=['GET'])
-def get_liked_courses():
-    liked_courses = [course["course_name"] for course in DB["liked_courses"]]
-    return jsonify({ "liked_courses": liked_courses}), 200
+@app.route('/liked_courses/<user_id>', methods=['GET'])
+def get_liked_courses(user_id):
+    liked_courses = [course["course_name"] for course in DB["liked_courses"] if course["user_id"] == user_id]
+    liked_courses_details = [app_context["recommendation_engine"].get_course_details(course_name) for course_name in liked_courses]
+    return jsonify({"user_id": user_id, "liked_courses": liked_courses_details}), 200
 
 # Endpoint to like a course (POST)
 @app.route('/like_course', methods=['POST'])
 def like_course():
     data = request.json
     course_data = {
-        "course_name": data["course_name"],
-        
-        
+        "user_id": data["user_id"],
+        "course_name": data["course_name"],                
     }
     DB["liked_courses"].append(course_data)
     return jsonify({"message": "Course liked successfully"}), 201
@@ -81,9 +81,9 @@ def update_user(user_id):
 @app.route('/unlike_course', methods=['DELETE'])
 def unlike_course():
     data = request.json
-    #user_id = data["user_id"]
+    user_id = data["user_id"]
     course_name = data["course_name"]
-    DB["liked_courses"] = [course for course in DB["liked_courses"] if not (course["course_name"] == course_name)]
+    DB["liked_courses"] = [course for course in DB["liked_courses"] if not (course["user_id"] == user_id and course["course_name"] == course_name)]
     return jsonify({"message": "Course unliked successfully"}), 200
 
 # Endpoint to get recommendations

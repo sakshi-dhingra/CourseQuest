@@ -7,6 +7,7 @@ import Home from './Component/Home/home'
 function App() {
   const [message, setMessage] = useState('');
   const [username, setUsername] = useState('');
+  const [userId, setUserId] = useState(null);
 
   const handleMessage = (msg) => {
     
@@ -14,14 +15,18 @@ function App() {
 
   };
 
+  const handleRegister = (id) => {
+    setUserId(id);
+  };
+
 
   return (
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/register" element={<Register handleMessage={handleMessage} />} />
+          <Route path="/register" element={<Register handleMessage={handleMessage}   handleRegister={handleRegister}/>} />
           <Route path="/" element={<Login handleMessage={handleMessage} setUsername={setUsername}  />} />
-          <Route path="/home" element={<Home handleMessage={handleMessage} username={username}/>} />
+          <Route path="/home" element={<Home handleMessage={handleMessage} username={username} userId={userId}/>} />
           
         </Routes>
         {message && <p className="message">{message}</p>}

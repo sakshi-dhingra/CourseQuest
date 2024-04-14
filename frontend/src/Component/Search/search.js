@@ -2,11 +2,11 @@ import React, { useState,useEffect } from 'react';
 import './search.css'; 
 import Select from 'react-select';
 
-const Search = ({ onSearch }) => {
-  const [selectedAttributes, setSelectedAttributes] = useState([]);
-  const [selectedDifficulty, setSelectedDifficulty] = useState('');
-  const [selectedWebsite, setSelectedWebsite] = useState('');
-  const [selectedPaid, setSelectedPaid] = useState('');
+const Search = ({ onSearch, userId }) => {
+  const [selectedAttributes, setSelectedAttributes] = useState(JSON.parse(localStorage.getItem('selectedAttributes')) || []);
+  const [selectedDifficulty, setSelectedDifficulty] = useState(localStorage.getItem('selectedDifficulty') || '');
+  const [selectedWebsite, setSelectedWebsite] = useState(localStorage.getItem('selectedWebsite') || '');
+  const [selectedPaid, setSelectedPaid] = useState(localStorage.getItem('selectedPaid') || '');
   const [keywords, setKeywords] = useState([]);
   const [recommendedCourses, setRecommendedCourses] = useState(null);
 
@@ -28,6 +28,14 @@ const Search = ({ onSearch }) => {
 
     fetchKeywords();
   }, []); 
+
+  useEffect(() => {
+    localStorage.setItem('selectedAttributes', JSON.stringify(selectedAttributes));
+    localStorage.setItem('selectedDifficulty', selectedDifficulty);
+    localStorage.setItem('selectedWebsite', selectedWebsite);
+    localStorage.setItem('selectedPaid', selectedPaid);
+  }, [selectedAttributes, selectedDifficulty, selectedWebsite, selectedPaid]);
+
 
 
   // Options for dropdown questions
@@ -59,6 +67,8 @@ const Search = ({ onSearch }) => {
       difficulty: selectedDifficulty,
       website: selectedWebsite,
       paid: selectedPaid,
+      user_id : userId
+
     };
   
     try {
@@ -84,14 +94,14 @@ const Search = ({ onSearch }) => {
   };
 
 
-  const handleLikeCourse = async courseName => {
+  const handleLikeCourse = async course => {
     try {
       const response = await fetch('http://localhost:5000/like_course', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ course_name: courseName })
+        body: JSON.stringify({ course_name: course['Course Name'], user_id: userId })
       });
 
       if (!response.ok) {
@@ -166,8 +176,9 @@ const Search = ({ onSearch }) => {
           <p><strong>Difficulty Level:</strong> {course['Difficulty Level']}</p>
           <p><strong>Fees:</strong> {course['Fees']}</p>
           <p><strong>Website:</strong> {course['Website']}</p>
+          <p><strong>Duration:</strong> {course['Duration']} Hours</p> 
           <p><strong>Course URL:</strong> <a href={course['Course URL']} target="_blank" rel="noopener noreferrer">{course['Course URL']}</a></p>
-          <button onClick={() => handleLikeCourse(course['Course Name'])}>
+          <button onClick={() => handleLikeCourse(course)}>
                   Like
           </button>
           {index !== recommendedCourses.length - 1 && <hr />} 

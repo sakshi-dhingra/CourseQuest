@@ -1,0 +1,31 @@
+/* LikesContent.css */
+
+.liked-courses {
+    margin-top: 20px;
+  }
+  
+  .course-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .course-item {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .course-item h3 {
+    margin-top: 0;
+  }
+  
+  .course-item p {
+    margin: 5px 0;
+  }
+  
+  .course-item a {
+    color: blue;
+    text-decoration: none;
+  }
+  
