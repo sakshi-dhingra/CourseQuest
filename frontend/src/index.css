@@ -6,7 +6,6 @@ body {
 .App {
   background-color: #8dd8f1; /* Bright blue */
   text-align: center;
-  margin-top: 50px;
 }
 
 /* Other styles for your components */
@@ -14,6 +13,7 @@ body {
   display: flex;
   flex-direction: column;
   width: 300px;
+  margin-top: 0;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ccc;

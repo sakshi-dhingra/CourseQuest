@@ -33,6 +33,8 @@ class Engine:
         return cleaned_text
 
     def _clean_attributes_improved(self, text):
+
+
         logging.getLogger('nltk').setLevel(logging.WARNING)
         nltk.download('wordnet', quiet=True)
         nltk.download('stopwords', quiet=True)
@@ -196,4 +198,6 @@ class Engine:
         return self.get_recommendations(" ".join(all_attributes), None, None, None, liked_courses)
 
     def get_course_details(self, course_name):
+
         return self.courses_all[self.courses_all['Course Name'] == course_name][['Course Name', 'Course URL', 'Difficulty Level', 'Website', 'Fees', 'Duration']].to_dict(orient='records')
+

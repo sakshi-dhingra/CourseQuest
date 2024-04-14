@@ -1,0 +1,40 @@
+.similar-container {
+    margin-top: 20px;
+  }
+  
+  .similar-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .similar-container ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .similar-container li {
+    margin-bottom: 20px;
+  }
+  
+  .similar-container .course {
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  
+  .similar-container .course h4 {
+    margin-top: 0;
+  }
+  
+  .similar-container .course p {
+    margin: 5px 0;
+  }
+  
+  .similar-container .course a {
+    text-decoration: none;
+    color: #007bff;
+  }
+  
+  .similar-container .course a:hover {
+    text-decoration: underline;
+  }
+  

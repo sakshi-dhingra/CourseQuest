@@ -4,15 +4,17 @@ import Search from '../Search/search.js';
 import userProfileIcon from './static/user_icon.png';
 import { useLocation } from 'react-router-dom';
 import LikesContent from '../Liked Content/LikesContent.js'; 
+import Similar from '../SimilarCourses/Similar.js'
 
 
 
-const Home = () => {
+const Home = ({ userId }) => {
   const [selectedTab, setSelectedTab] = useState('search');
   const location = useLocation();
   const username = location.state && location.state.username ? location.state.username : '';
-  console.log("Location state:", location.state);
 
+  console.log("Location state:", location.state);
+  console.log("User ID:", userId); 
   const handleTabClick = (tab) => {
     setSelectedTab(tab);
   };
@@ -20,11 +22,11 @@ const Home = () => {
   const renderTabContent = () => {
     switch (selectedTab) {
       case 'search':
-        return <Search />; 
-      case 'recommendation':
-        return <RecommendationContent />;
+        return <Search userId={userId}/>; 
       case 'likes':
-        return <LikesContent />;
+        return <LikesContent userId={userId} />;
+      case 'similar':
+        return <Similar userId={userId} /> 
       default:
         return null;
     }
@@ -44,7 +46,8 @@ const Home = () => {
       {/* Render tabs */}
       <div className="tabs">
         <div className={`tab ${selectedTab === 'search' ? 'active' : ''}`} onClick={() => handleTabClick('search')}>Search</div>
-         <div className={`tab ${selectedTab === 'likes' ? 'active' : ''}`} onClick={() => handleTabClick('likes')}>Likes</div>
+        <div className={`tab ${selectedTab === 'likes' ? 'active' : ''}`} onClick={() => handleTabClick('likes')}>Likes</div>
+        <div className={`tab ${selectedTab === 'similar' ? 'active' : ''}`} onClick={() => handleTabClick('similar')}>Similar</div>
       </div>
 
       {/* Render content based on selected tab */}
@@ -55,9 +58,5 @@ const Home = () => {
   );
 };
 
-// Separate components for different tab content
-const RecommendationContent = () => {
-  return <div>Recommendation Content</div>;
-};
 
 export default Home;
