@@ -193,17 +193,7 @@ class Engine:
 
         return self.get_recommendations(" ".join(all_attributes), None, None, None, liked_courses)
 
-'''
-    def get_recommendations(self, keyword):
-        print(f"Getting recommendations for '{keyword}'")
-        filtered_courses = self.courses_all
-        keyword_vector = self.tfidf.transform([keyword])
-        distances = cosine_distances(keyword_vector, self.X)
-        #cosine_sim = linear_kernel(keyword_vector, self.X)
-        #closest_indices = cosine_sim.argsort()[0][:5]
-        #distances = cosine_distances(keyword_vector, self.X)
-        closest_indices = distances.argsort()[0][:5]
-        relevant_courses = self.courses_all.iloc[closest_indices][['Course Name', 'Course URL']]
-        relevant_courses['Course Name'] = relevant_courses['Course Name'].str.replace(',', ' ')
-        return relevant_courses
-'''
+
+    def get_course_details(self, course_name):
+        return self.courses_all[self.courses_all['Course Name'] == course_name][['Course Name', 'Course URL', 'Difficulty Level', 'Website', 'Fees']].to_dict(orient='records')
+
