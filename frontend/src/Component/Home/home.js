@@ -1,9 +1,4 @@
-Home.js
-
-
-
-
-import React, { useState,useEffect } from 'react';
+import React, { useState} from 'react';
 import './home.css';
 import Search from '../Search/search.js';
 import userProfileIcon from './static/user_icon.png';

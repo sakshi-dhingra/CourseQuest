@@ -23,6 +23,26 @@ const Similar = ({ userId }) => {
     }
   }, [userId]);
 
+  const handlelikeCourse = async course => {
+    try {
+      const response = await fetch('http://localhost:5000/like_course', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ course_name: course['Course Name'], user_id: userId })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to like course');
+      }
+
+      // Handle success
+    } catch (error) {
+      console.error('Error liking course:', error);
+    }
+  };
+
   return (
     <div className="similar-container">
       <h2>Similar Courses</h2>
@@ -35,6 +55,9 @@ const Similar = ({ userId }) => {
               <p><strong>Fees:</strong> {course['Fees']}</p>
               <p><strong>Website:</strong> {course['Website']}</p>
               <p><strong>Course URL:</strong> <a href={course['Course URL']} target="_blank" rel="noopener noreferrer">{course['Course URL']}</a></p> 
+              <button onClick={() => handlelikeCourse(course)}>
+                Like
+              </button>
             </div>
           </li>
         ))}
