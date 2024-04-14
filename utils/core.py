@@ -13,7 +13,7 @@ from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-nltk.data.path.append("Users/sanatparanjape/nltk_data")
+
 class Engine:
     def _remove_commas(self, row):
         if row.name == 'Course Name' or row.name == 'Skills':
@@ -33,12 +33,11 @@ class Engine:
         return cleaned_text
 
     def _clean_attributes_improved(self, text):
-        #logging.getLogger('nltk').setLevel(logging.WARNING)
-        #nltk.download('wordnet', quiet=True)
-        #nltk.download('stopwords', quiet=True)
-        from nltk.tokenize import word_tokenize
 
-        from nltk.stem import WordNetLemmatizer
+
+        logging.getLogger('nltk').setLevel(logging.WARNING)
+        nltk.download('wordnet', quiet=True)
+        nltk.download('stopwords', quiet=True)
         stop_words = set(stopwords.words('english'))
         tokens = word_tokenize(text)
         lemmatizer = WordNetLemmatizer()
@@ -199,4 +198,6 @@ class Engine:
         return self.get_recommendations(" ".join(all_attributes), None, None, None, liked_courses)
 
     def get_course_details(self, course_name):
+
         return self.courses_all[self.courses_all['Course Name'] == course_name][['Course Name', 'Course URL', 'Difficulty Level', 'Website', 'Fees', 'Duration']].to_dict(orient='records')
+
