@@ -50,3 +50,47 @@
 .search-container button:hover {
   background-color: #0056b3;
 }
+
+.recommended-courses {
+  margin-top: 40px;
+  border-top: 1px solid #ccc; /* Add a border at the top of the recommended courses section */
+}
+
+.recommended-courses h3 {
+  font-size: 22px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.recommended-courses ul {
+  list-style: none;
+  padding: 0;
+}
+
+.recommended-courses li {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc; /* Add a border at the bottom of each recommended course */
+  padding-bottom: 20px; /* Add some padding at the bottom of each recommended course */
+}
+
+.recommended-courses li:last-child {
+  border-bottom: none; /* Remove the border from the last recommended course */
+}
+
+.recommended-courses li div {
+  margin-bottom: 8px;
+}
+
+.recommended-courses li div strong {
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+.recommended-courses li div a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.recommended-courses li div a:hover {
+  text-decoration: underline;
+}

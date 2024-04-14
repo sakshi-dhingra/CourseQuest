@@ -21,7 +21,7 @@ function App() {
         <Routes>
           <Route path="/register" element={<Register handleMessage={handleMessage} />} />
           <Route path="/" element={<Login handleMessage={handleMessage} setUsername={setUsername}  />} />
-          <Route path="/home" element={<Home handleMessage={handleMessage} username={username}  />} />
+          <Route path="/home" element={<Home handleMessage={handleMessage} username={username}/>} />
           
         </Routes>
         {message && <p className="message">{message}</p>}
